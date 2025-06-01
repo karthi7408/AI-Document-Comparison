@@ -1,0 +1,24 @@
+[2025-06-01T21:23:16.130382] ERROR: Error generating insights or metrics
+Traceback (most recent call last):
+  File "C:\Users\Karthikeyan JM\Documents\Hackathon verison 3\doc-compare-app\src\main.py", line 155, in compare
+    insights = insights_generator.get_document_insights(doc1.content, doc2.content)
+  File "C:\Users\Karthikeyan JM\Documents\Hackathon verison 3\doc-compare-app\src\comparison\insights.py", line 65, in get_document_insights
+    ai_diff_changes=self.diff_view.get_ai_generated_diff_explanation(doc1, doc2) if self.azure_ai_service else None
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\Karthikeyan JM\Documents\Hackathon verison 3\doc-compare-app\src\comparison\diff_view.py", line 383, in get_ai_generated_diff_explanation
+    return result.get("generated_text", "")
+           ^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+
+[2025-06-01T22:13:42.195911] ERROR: Error generating insights or metrics
+Traceback (most recent call last):
+  File "C:\Users\Karthikeyan JM\Documents\Hackathon verison 3\doc-compare-app\src\main.py", line 155, in compare
+    insights = insights_generator.get_document_insights(doc1.content, doc2.content)
+  File "C:\Users\Karthikeyan JM\Documents\Hackathon verison 3\doc-compare-app\src\comparison\insights.py", line 65, in get_document_insights
+    ai_diff_changes=self.diff_view.get_ai_generated_diff_explanation(doc1, doc2) if self.azure_ai_service else None
+                    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^
+  File "C:\Users\Karthikeyan JM\Documents\Hackathon verison 3\doc-compare-app\src\comparison\diff_view.py", line 383, in get_ai_generated_diff_explanation
+    return result.get("generated_text", "")
+           ^^^^^^^^^^
+AttributeError: 'NoneType' object has no attribute 'get'
+

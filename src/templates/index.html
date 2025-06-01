@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Document Comparison App</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Document Comparison Application</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="upload-section">
+                <label>Upload Document 1:</label>
+                <input type="file" name="document1" required>
+            </div>
+            <div class="upload-section">
+                <label>Upload Document 2:</label>
+                <input type="file" name="document2" required>
+            </div>
+            <button type="submit">Compare Documents</button>
+        </form>
+        {% with messages = get_flashed_messages(with_categories=true) %}
+          {% if messages %}
+            <ul class="flashes">
+            {% for category, message in messages %}
+              <li class="{{ category }}">{{ message }}</li>
+            {% endfor %}
+            </ul>
+          {% endif %}
+        {% endwith %}
+    </div>
+</body>
+</html>

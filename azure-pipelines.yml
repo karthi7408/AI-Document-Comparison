@@ -1,0 +1,51 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  pythonVersion: '3.8'
+  workingDirectory: '$(System.DefaultWorkingDirectory)'
+
+steps:
+- task: UsePythonVersion@0
+  inputs:
+    versionSpec: '$(pythonVersion)'
+    addToPath: true
+
+- script: |
+    python -m pip install --upgrade pip
+    pip install -r requirements.txt
+    python -m spacy download en_core_web_sm
+  displayName: 'Install dependencies and spaCy model'
+
+- script: |
+    echo "Running application..."
+    python src/main.py &
+    sleep 10
+    echo "Application started."
+  displayName: 'Run Python Application'
+
+# Optional: Build and publish artifacts (for deployment)
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(System.DefaultWorkingDirectory)'
+    Contents: '**'
+    TargetFolder: '$(Build.ArtifactStagingDirectory)'
+  displayName: 'Copy files to staging'
+
+- task: PublishBuildArtifacts@1
+  inputs:
+    PathtoPublish: '$(Build.ArtifactStagingDirectory)'
+    ArtifactName: 'drop'
+    publishLocation: 'Container'
+  displayName: 'Publish build artifacts'
+
+# Example: Azure Web App deployment (uncomment and configure as needed)
+# - task: AzureWebApp@1
+#   inputs:
+#     azureSubscription: '<your-azure-service-connection>'
+#     appName: '<your-app-service-name>'
+#     package: '$(Build.ArtifactStagingDirectory)/**/*.zip'
+#   displayName: 'Deploy to Azure Web App'

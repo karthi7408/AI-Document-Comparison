@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Advanced Document Comparison</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script>
+        function openTab(evt, tabName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(tabName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+        window.onload = function() {
+            document.getElementsByClassName("tablinks")[0].click();
+        }
+    </script>
+</head>
+<body>
+    <div class="container">
+        <h1>Advanced Document Comparison</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="upload-section">
+                <label>Upload Document 1:</label>
+                <input type="file" name="document1" required>
+            </div>
+            <div class="upload-section">
+                <label>Upload Document 2:</label>
+                <input type="file" name="document2" required>
+            </div>
+            <button type="submit">Analyze</button>
+        </form>
+        {% if result %}
+        <div class="tabs">
+            <button class="tablinks" onclick="openTab(event, 'Diff')">Diff</button>
+            <button class="tablinks" onclick="openTab(event, 'Sentiment')">Sentiment</button>
+            <button class="tablinks" onclick="openTab(event, 'Tone')">Tone</button>
+            <button class="tablinks" onclick="openTab(event, 'Semantic')">Semantic</button>
+            <button class="tablinks" onclick="openTab(event, 'Multilingual')">Multilingual</button>
+        </div>
+        <div id="Diff" class="tabcontent">
+            <h2>Diff Functionalities</h2>
+            <pre>{{ result.diff_view }}</pre>
+            <pre>{{ result.side_by_side_html }}</pre>
+            <pre>{{ result.inline_diff_html }}</pre>
+            <pre>{{ result.summarize_diff_changes }}</pre>
+            <pre>{{ result.similarity_score }}</pre>
+             <pre>{{ result.changed_lines }}</pre>
+            <pre>{{ result.contextual_diff }}</pre>
+            <pre>{{ result.diff_stats }}</pre>
+        </div>
+        <div id="Sentiment" class="tabcontent">
+            <h2>Sentiment Functionalities</h2>
+            <pre>{{ result.sentiment_details_doc1 }}</pre>
+            <pre>{{ result.sentiment_details_doc2 }}</pre>
+            <pre>{{ result.priority_action_report_doc1 }}</pre>
+            <pre>{{ result.priority_action_report_doc2 }}</pre>
+            <pre>{{ result.sentiment_time_series }}</pre>
+            <pre>{{ result.sentiment_change_points }}</pre>
+        </div>
+        <div id="Tone" class="tabcontent">
+            <h2>Tone Functionalities</h2>
+            <pre>{{ result.tone_shift_details }}</pre>
+            <pre>{{ result.tone_distribution }}</pre>
+            <pre>{{ result.compliance_flags_doc1 }}</pre>
+            <pre>{{ result.compliance_flags_doc2 }}</pre>
+            <pre>{{ result.highlight_important_tone_points_doc1 }}</pre>
+            <pre>{{ result.highlight_important_tone_points_doc2 }}</pre>
+            <pre>{{ result.tone_trend }}</pre>
+        </div>
+        <div id="Semantic" class="tabcontent">
+            <h2>Semantic Functionalities</h2>
+            <pre>{{ result.semantic_analysis }}</pre>
+            <pre>{{ result.extract_entities_doc1 }}</pre>
+            <pre>{{ result.extract_entities_doc2 }}</pre>
+            <pre>{{ result.compare_entities }}</pre>
+        </div>
+        <div id="Multilingual" class="tabcontent">
+            <h2>Multilingual Functionalities</h2>
+            <pre>{{ result.detected_language_doc1 }}</pre>
+            <pre>{{ result.detected_language_doc2 }}</pre>
+            <pre>{{ result.summarize_text_doc1 }}</pre>
+            <pre>{{ result.summarize_text_doc2 }}</pre>
+            <pre>{{ result.detect_pii_doc1 }}</pre>
+            <pre>{{ result.detect_pii_doc2 }}</pre>
+            <pre>{{ result.extract_topics_doc1 }}</pre>
+            <pre>{{ result.extract_topics_doc2 }}</pre>
+        </div>
+        {% endif %}
+    </div>
+</body>
+</html>
